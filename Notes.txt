@@ -3,6 +3,7 @@ git add <file name>
 git add . (add all untracked changes)
 git add --all (don't use this)
 git commit -m "add comment here"
+git log --oneline (git status for github push)
 git push -u origin master (first time setup only)
 git push origin master (specify push to github)
 git push (use this)
