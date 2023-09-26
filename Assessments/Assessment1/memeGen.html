@@ -1,0 +1,66 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="memegenerator.css" />
+</head>
+
+<body>
+    <h1>Meme Generator</h1>
+
+    <h2>Fill out the form to create a new meme!</h2>
+
+    <form id="memeform">
+        <p>Image URL:</p>
+        <input type="text" placeholder="What is the image URL?">
+        <p>Top Text:</p>
+        <input type="text" id="memeTop" placeholder="Enter meme top text" />
+        <hr />
+        <label id="label"></label>
+        <p>Bottom Text:</p>
+        <input type="text" id="memeBottom" placeholder="Enter meme bottom text" />
+        <hr />
+        <label id="label"></label>
+    </form>
+    <button type="submit" form="memeform" value="submit">submit</button>
+
+
+</body>
+<script type="text/javascript" src="memegenerator.js"></script>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="memegenerator.css" />
+</head>
+
+<body>
+    <h1>Meme Generator</h1>
+
+    <h2>Fill out the form to create a new meme!</h2>
+
+    <div class="memegenerator">
+        <label>Select Image</label>
+        <input type="file" id="imageInput">
+        <label>Top Text</label>
+        <input>select:disabled</input>
+        <label><select name="" id="" disabled="disabled"></select></label>
+        <input type="text" id="textTopInput">
+        <label>Bottom Text</label>
+        <input type="text" id="textBottomInput">
+
+        <canvas id="meme"></canvas>
+    </div>
+    <script type="text/javascript" src="memegenerator.js"></script>
+</body>
+
+</html>

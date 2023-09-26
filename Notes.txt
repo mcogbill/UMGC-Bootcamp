@@ -1,0 +1,7 @@
+git status (check status)
+git add <file name>
+git add . (add all untracked changes)
+git add --all (don't use this)
+git commit -m "add comment here"
+git push
+git clone https://paste-github-repository-address-here
