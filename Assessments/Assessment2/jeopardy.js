@@ -1,3 +1,7 @@
+const URL = 'https://jservice.io/api';
+const NUM_CATEGORIES = 6;
+const NUM_QUESTIONS_PER_CAT = 5;
+
 // categories is the main data structure for the app; it looks like this:
 
 //  [
@@ -18,6 +22,7 @@
 //    ...
 //  ]
 
+
 let categories = [];
 
 
@@ -27,6 +32,16 @@ let categories = [];
  */
 
 function getCategoryIds() {
+    let selectCategory = axios.get('${URL}/categories', {
+        params: { count: "100", offset: 20 },
+    });
+
+    let randomCategory = _.samesize(selectCategory.data, NUM_CATEGORIES);
+    let categoryIds = randomCategory.map((item) => {
+        return item.id;
+    });
+
+    return categoryIds;
 }
 
 /** Return object with data about a category:
@@ -42,6 +57,25 @@ function getCategoryIds() {
  */
 
 function getCategory(catId) {
+    let selectCategory = axios.get('${URL}/clues', {
+        params: { category: catId },
+    });
+
+    let clues = _.sampleSize(selectCategory.data, NUM_QUESTIONS_PER_CAT);
+
+    let questionAnswerArray = clues.map((arr) => {
+        return {
+            question: arr.question,
+            answer: arr.answer,
+            display: null,
+        };
+    });
+
+    let clueObj = {
+        title: clues[0].category.title,
+        clues: questionAnswerArray,
+    };
+    return clueObj;
 }
 
 /** Fill the HTML table#jeopardy with the categories & cells for questions.
@@ -53,6 +87,21 @@ function getCategory(catId) {
  */
 
 async function fillTable() {
+    let categoryRow = $("<tr>");
+    $("thead").append(categoryRow);
+
+    for (let i = 0; i < NUM_CATEGORIES; i++) {
+        $("<td>Cat</td>").appendTo(categoryRow);
+    }
+
+    for (let y = 0; y < NUM_QUESTIONS_PER_CAT; y++) {
+        let questionRow = $("<tr>");
+        $("tbody").append(questionRow);
+        for (let x = 0; x < NUM_CATEGORIES; x++) {
+            let question = $("<td>").text("?").attr("id", '${x}-${y}');
+            question.appendTo(questionRow);
+        }
+    }
 }
 
 /** Handle clicking on a clue: show the question or answer.
