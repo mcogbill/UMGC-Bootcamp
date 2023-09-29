@@ -8,3 +8,4 @@ git push -u origin master (first time setup only)
 git push origin master (specify push to github)
 git push (use this)
 git clone https://paste-github-repository-address-here
+note...
