@@ -22,10 +22,10 @@ const canvas = document.querySelector("#meme");
 let image;
 
 imageInput.addEventListener("change", () => {
-    const imageUrl = URL.createObjectURL(imageInput.files[0]);
+    // const imageUrl = URL.createObjectURL(imageInput.files[0]);
 
     image = new Image();
-    image.src = imageUrl;
+    image.src = imageInput.value;
 
     image.addEventListener("load", () => {
         updateCanvas(canvas, image, textTopInput.value, textBottomInput.value);
@@ -53,6 +53,7 @@ function updateCanvas(canvas, image, textTop, textBottom) {
 
     context.strokeStyle = "black";
     context.lineWidth = Math.floor(fontSize / 4);
+    context.createElement
     context.fillStyle = "white";
     context.textAlign = "center";
     context.lineJoin = "round";
