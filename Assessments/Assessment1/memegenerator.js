@@ -25,8 +25,20 @@ imageInput.addEventListener("change", () => {
     const imageUrl = URL.createObjectURL(imageInput.
         files[0]);
     //Input create div for image
+    <div image=
+    // <div class="memegenerator">
+    //     <label>Select Image</label>
+    //     <input type="file" id="imageInput">
+    //     <label>Top Text</label>
+    //     <input type="text" id="textTopInput">
+    //     <label>Bottom Text</label>
+    //     <input type="text" id="textBottomInput">
 
-    image = new Image();
+    //     <div id="memeContainer">
+    //         <a href="" id="refresh" class="btn"><i class="fa fa-refresh"></i>Delete</a>
+    //     </div>
+
+    image= new Image();
     image.src = imageUrl;
 
     image.addEventListener("load", () => {
@@ -75,9 +87,8 @@ function updateCanvas(canvas, image, textTop, textBottom) {
 
     //append canvas and button to div tag
     //append to memeContainer
-}
 
-const deleteButton = document.createElement("BUTTON");
-deleteButton.addEventListener("click", function () {
-    this.closest("div").remove();
-});
+    $("refresh").on('click', function () {
+        location.reload();
+    })
+}
