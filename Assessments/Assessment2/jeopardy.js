@@ -31,6 +31,7 @@ let categories = [];
  * Returns array of category ids
  */
 
+// document.onload function
 function getCategoryIds() {
     let selectCategory = axios.get('${URL}/categories', {
         params: { count: "100", offset: 20 },
