@@ -1,148 +1,102 @@
-const URL = 'https://jservice.io/api';
-const NUM_CATEGORIES = 6;
-const NUM_QUESTIONS_PER_CAT = 5;
+const numOfCategories = 6;
+const numOfQuestions = 5
 
-// categories is the main data structure for the app; it looks like this:
-
-//  [
-//    { title: "Math",
-//      clues: [
-//        {question: "2+2", answer: 4, showing: null},
-//        {question: "1+1", answer: 2, showing: null}
-//        ...
-//      ],
-//    },
-//    { title: "Literature",
-//      clues: [
-//        {question: "Hamlet Author", answer: "Shakespeare", showing: null},
-//        {question: "Bell Jar Author", answer: "Plath", showing: null},
-//        ...
-//      ],
-//    },
-//    ...
-//  ]
-
-
-let categories = [];
-
-
-/** Get NUM_CATEGORIES random category from API.
- *
- * Returns array of category ids
- */
-
-// document.onload function
-function getCategoryIds() {
-    let selectCategory = axios.get('${URL}/categories', {
-        params: { count: "100", offset: 20 },
-    });
-
-    let randomCategory = _.samesize(selectCategory.data, NUM_CATEGORIES);
-    let categoryIds = randomCategory.map((item) => {
-        return item.id;
-    });
-
-    return categoryIds;
+async function getCategoryIds() {
+    let response = await axios.get(`http://jservice.io/api/random?count=${numOfCategories}`)
+    return response.data.map(obj => obj.category.id)
 }
 
-/** Return object with data about a category:
- *
- *  Returns { title: "Math", clues: clue-array }
- *
- * Where clue-array is:
- *   [
- *      {question: "Hamlet Author", answer: "Shakespeare", showing: null},
- *      {question: "Bell Jar Author", answer: "Plath", showing: null},
- *      ...
- *   ]
- */
-
-function getCategory(catId) {
-    let selectCategory = axios.get('${URL}/clues', {
-        params: { category: catId },
-    });
-
-    let clues = _.sampleSize(selectCategory.data, NUM_QUESTIONS_PER_CAT);
-
-    let questionAnswerArray = clues.map((arr) => {
-        return {
-            question: arr.question,
-            answer: arr.answer,
-            display: null,
-        };
-    });
-
-    let clueObj = {
-        title: clues[0].category.title,
-        clues: questionAnswerArray,
-    };
-    return clueObj;
+async function loadCategories(categoryIds) {
+    categoryPromises = [...categoryIds]
+        .map(id => (
+            axios.get(`http://jservice.io/api/category?id=${id}`)
+        )
+        )
+    let loadCategories = await Promise.all(categoryPromises)
+    return loadCategories.map(res => res.data)
 }
 
-/** Fill the HTML table#jeopardy with the categories & cells for questions.
- *
- * - The <thead> should be filled w/a <tr>, and a <td> for each category
- * - The <tbody> should be filled w/NUM_QUESTIONS_PER_CAT <tr>s,
- *   each with a question for each category in a <td>
- *   (initally, just show a "?" where the question/answer would go.)
- */
-
-async function fillTable() {
-    let categoryRow = $("<tr>");
-    $("thead").append(categoryRow);
-
-    for (let i = 0; i < NUM_CATEGORIES; i++) {
-        $("<td>Cat</td>").appendTo(categoryRow);
+async function fillTable(categories, thead, tbody) {
+    let firstRow = document.createElement('tr');
+    for (let category of categories) {
+        const categoriesTd = document.createElement('td');
+        categoriesTd.innerText = category.title
+        firstRow.append(categoriesTd);
     }
+    thead.append(firstRow);
 
-    for (let y = 0; y < NUM_QUESTIONS_PER_CAT; y++) {
-        let questionRow = $("<tr>");
-        $("tbody").append(questionRow);
-        for (let x = 0; x < NUM_CATEGORIES; x++) {
-            let question = $("<td>").text("?").attr("id", '${x}-${y}');
-            question.appendTo(questionRow);
+    for (let row = 0; row < numOfQuestions; row++) {
+        let TR = document.createElement('tr');
+        for (let col = 0; col < numOfCategories; col++) {
+            let TD = document.createElement('td')
+            let clue = categories[col].clues[row]
+            TD.innerText = '?'
+            TD.id = `question-${row + 1}-${col + 1}`
+            TD.dataset.question = clue.question
+            TD.dataset.answer = stripHtml(clue.answer)
+            TD.classList.add('not-clicked');
+            TR.append(TD);
         }
+        tbody.append(TR)
     }
 }
 
-/** Handle clicking on a clue: show the question or answer.
- *
- * Uses .showing property on clue to determine what to show:
- * - if currently null, show question & set .showing to "question"
- * - if currently "question", show answer & set .showing to "answer"
- * - if currently "answer", ignore click
- * */
 
-function handleClick(evt) {
+let initialState = "one"
+function handleClickOnTbody(evt) {
+    let td = evt.target
+    let state = td.dataset.state
+    if (!state) {
+        td.dataset.state = 'question'
+        td.innerText = td.dataset.question
+    } else if (state === 'question') {
+        td.dataset.state = 'answer'
+        td.innerText = td.dataset.answer
+
+    } else if (state === 'answer') {
+        return
+    }
+
 }
 
-/** Wipe the current Jeopardy board, show the loading spinner,
- * and update the button used to fetch data.
- */
-
-function showLoadingView() {
+async function newGame() {
+    const oldGameContainer = document.getElementById('game')
+    const newGameContainer = document.createElement('div')
+    newGameContainer.id = 'game'
+    const table = document.createElement('table');
+    table.id = "jeopardy";
+    const thead = document.createElement('thead')
+    const tbody = document.createElement('tbody');
+    tbody.addEventListener('click', handleClickOnTbody)
+    table.append(thead, tbody);
+    let catIds = await getCategoryIds()
+    console.log('catids array', catIds)
+    let loadedCategories = await loadCategories(catIds)
+    console.log('loaded', loadedCategories)
+    await fillTable(loadedCategories, thead, tbody)
+    newGameContainer.append(table)
+    oldGameContainer.replaceWith(newGameContainer)
 
 }
 
-/** Remove the loading spinner and update the button used to fetch data. */
+const button = document.querySelector('#restart')
+button.addEventListener('click', newGame)
+window.addEventListener('DOMContentLoaded', newGame);
 
-function hideLoadingView() {
+function stripHtml(html) {
+    var tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
 }
 
-/** Start game:
- *
- * - get random category Ids
- * - get data for each category
- * - create HTML table
- * */
+let swap = (arr, index1, index2) => (
+    [arr[index1], arr[index2]] = [arr[index2], arr[index1]]
+)
 
-async function setupAndStart() {
+function shuffleMutate(arr) {
+    for (let index = arr.length - 1; index >= 0; index--) {
+        let randIndex = Math.floor(Math.random() * (index + 1))
+        swap(arr, index, randIndex)
+    }
+    return arr
 }
-
-/** On click of start / restart button, set up game. */
-
-// TODO
-
-/** On page load, add event handler for clicking clues */
-
-// TODO
