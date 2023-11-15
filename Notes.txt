@@ -1,3 +1,4 @@
+GIT:
 git status (check status)
 git add <file name>
 git add . (add all untracked changes)

@@ -1,94 +1,57 @@
-// function repeatvalue() {
-//     var txtName = document.getElementById("memeTop");
-//     var lblName = document.getElementById("label");
-//     lblName.innerHTML = txtName.value;
-// }
+document.addEventListener("DOMContentLoaded", function () {
+    var memeForm = document.getElementById("meme-form");
+    var listGallery = document.querySelector(".gallery");
 
-// const img = document.createElement("img");
-// img.src = "";
-// // document.body.appendChild(img);
+    memeForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-// var memeForm = document.getElementById("memeform");
-// memeForm.addEventListener("submit", function (event) {
-//     event.preventDefault()
-//     console.log(memeForm)
-// })
+        var memeLi = document.createElement('li');
+        memeLi.classList.add("meme-img");
 
-const imageInput = document.querySelector("#imageInput");
-const textTopInput = document.querySelector("#textTopInput");
-const textBottomInput = document.querySelector("#textBottomInput");
-const canvas = document.querySelector("#meme");
 
-let image;
+        var topText = document.getElementById("text-top");
+        var urlInput = document.getElementById('uploaded-img').value,
+            src = urlInput,
+            img = document.createElement('img');
+        img.src = src;
 
-imageInput.addEventListener("change", () => {
-    const imageUrl = URL.createObjectURL(imageInput.
-        files[0]);
-    //Input create div for image
-    <div image=
-    // <div class="memegenerator">
-    //     <label>Select Image</label>
-    //     <input type="file" id="imageInput">
-    //     <label>Top Text</label>
-    //     <input type="text" id="textTopInput">
-    //     <label>Bottom Text</label>
-    //     <input type="text" id="textBottomInput">
 
-    //     <div id="memeContainer">
-    //         <a href="" id="refresh" class="btn"><i class="fa fa-refresh"></i>Delete</a>
-    //     </div>
+        var topTextDiv = document.createElement('div');
+        topTextDiv.classList.add("text", "top");
+        topTextDiv.innerText = document.getElementById("text-top").value;
 
-    image= new Image();
-    image.src = imageUrl;
 
-    image.addEventListener("load", () => {
-        //Pass in image div
-        updateCanvas(canvas, image, textTopInput.value, textBottomInput.value);
-    }, { once: true });
+        var bottomTextDiv = document.createElement('div');
+        bottomTextDiv.classList.add("text", "bottom");
+        bottomTextDiv.innerText = document.getElementById("text-bottom").value;
+
+        var removeDiv = document.createElement('div');
+        removeDiv.classList.add("red-cross");
+        removeDiv.innerText = "X";
+        removeDiv.style.color = "red";
+
+
+
+        listGallery.appendChild(memeLi);
+        memeLi.appendChild(img);
+        memeLi.appendChild(topTextDiv);
+        memeLi.appendChild(bottomTextDiv);
+        memeLi.appendChild(removeDiv);
+
+
+        memeForm.reset();
+
+
+    });
+
+
+
+
+    function remove(event) {
+        event.target.parentNode.remove();
+    }
+
+
+    listGallery.addEventListener('click', remove, false);
+
 });
-
-textTopInput.addEventListener("change", () => {
-    updateCanvas(canvas, image, textTopInput.value, textBottomInput.value);
-});
-
-textBottomInput.addEventListener("change", () => {
-    updateCanvas(canvas, image, textTopInput.value, textBottomInput.value);
-});
-
-
-
-function updateCanvas(canvas, image, textTop, textBottom) {
-    //create canvas tag
-    //create delete button
-    const context = canvas.getContext("2d");
-    const width = image.width;
-    const height = image.height;
-    const fontSize = Math.floor(width / 10);
-    const yOffset = height / 25;
-
-    canvas.width = width;
-    canvas.height = height;
-    context.drawImage(image, 0, 0);
-    context.drawImage(image, 0, 0);
-    context.strokeStyle = "black";
-    context.lineWidth = Math.floor(fontSize / 4);
-    context.fillStyle = "white";
-    context.textAlign = "center";
-    context.lineJoin = "round";
-    context.font = `${fontSize}px Ariel`;
-
-    context.textBaseline = "top";
-    context.strokeText(textTop, width / 2, yOffset);
-    context.fillText(textTop, width / 2, yOffset);
-
-    context.textBaseline = "bottom";
-    context.strokeText(textBottom, width / 2, dheight - yOffset);
-    context.fillText(textBottom, width / 2, height - yOffset);
-
-    //append canvas and button to div tag
-    //append to memeContainer
-
-    $("refresh").on('click', function () {
-        location.reload();
-    })
-}

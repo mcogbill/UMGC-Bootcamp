@@ -60,9 +60,9 @@ function handleClickOnTbody(evt) {
 }
 
 async function newGame() {
-    const oldGameContainer = document.getElementById('game')
+    const oldGameContainer = document.getElementById('jeopardyGame')
     const newGameContainer = document.createElement('div')
-    newGameContainer.id = 'game'
+    newGameContainer.id = 'jeopardyGame'
     const table = document.createElement('table');
     table.id = "jeopardy";
     const thead = document.createElement('thead')
