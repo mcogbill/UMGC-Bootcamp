@@ -5,6 +5,7 @@
 Answer the following questions below:
 
 - What are important differences between Python and JavaScript?
+Javascript is mainly used for Wed Development, while Python is used more for scientific purposes.
 
 - Given a dictionary like ``{"a": 1, "b": 2}``: , list two ways you
   can try to get a missing key (like "c") *without* your programming
