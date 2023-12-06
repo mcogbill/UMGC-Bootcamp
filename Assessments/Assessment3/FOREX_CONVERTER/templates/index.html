@@ -1,0 +1,105 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FOREX CONVERTER</title>
+
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Foreign Exchange Converter</h1>
+
+        <form id="currency-form" method="post">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-text">Converting From</span>
+                    <select class="selectpicker" name="firstCurrency">
+                        <option value='USDAED'>AED</option>
+                        <option value='USDAFN'>AFN</option>
+                        <option value='USDALL'>ALL</option>
+                        <option value='USDAMD'>AMD</option>
+                        <option value='USDANG'>ANG</option>
+                        <option value='USDAOA'>AOA</option>
+                        <option value='USDAUD'>AUD</option>
+                        <option value='USDCNY'>CNY</option>
+                        <option value='USDCOP'>COP</option>
+                        <option value='USDCZK'>CZK</option>
+                        <option value='USDEUR'>EUR</option>
+                        <option value='USDGBP'>GBP</option>
+                        <option value='USDJEP'>JEP</option>
+                        <option value='USDJPY'>JPY</option>
+                        <option value='USDMXN'>MXN</option>
+                        <option value='USDRUB'>RUB</option>
+                        <option value='USD'>USD</option>
+                        <option value='USDYER'>YER</option>
+                        <option value='USDZAR'>ZAR</option>
+                        <option value='USDZWL'>ZWL</option>
+                    </select>
+
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-text">Converting To</span>
+                    <select class="selectpicker" name="secondCurrency">
+                        <option value='USDAED'>AED</option>
+                        <option value='USDAFN'>AFN</option>
+                        <option value='USDALL'>ALL</option>
+                        <option value='USDAMD'>AMD</option>
+                        <option value='USDANG'>ANG</option>
+                        <option value='USDAOA'>AOA</option>
+                        <option value='USDAUD'>AUD</option>
+                        <option value='USDCNY'>CNY</option>
+                        <option value='USDCOP'>COP</option>
+                        <option value='USDCZK'>CZK</option>
+                        <option value='USDEUR'>EUR</option>
+                        <option value='USDGBP'>GBP</option>
+                        <option value='USDJEP'>JEP</option>
+                        <option value='USDJPY'>JPY</option>
+                        <option value='USDMXN'>MXN</option>
+                        <option value='USDRUB'>RUB</option>
+                        <option value='USD'>USD</option>
+                        <option value='USDYER'>YER</option>
+                        <option value='USDZAR'>ZAR</option>
+                        <option value='USDZWL'>ZWL</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" name="amount" placeholder="amount" min="0" required>
+            </div>
+            <div class="form-group">
+                <input id="submitbtn" type="submit" value="convert" class="btn btn-danger">
+            </div>
+        </form>
+
+        {% if info %}
+        <div id="results" class="pt-4">
+            <h5>results</h5>
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-text">{{info.amount}} {{info.firstCurrency}} </span>
+                    <div class="form-control" id="total">
+                        {{info.result }} {{info.secondCurrency}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+
+
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,3 +1,10 @@
+Ubuntu:
+Root User: sudo -s; apt-get update && apt-get upgrade
+Python Venv: python3 -m venv venv; source venv/bin/activate; deactivate; flask --app app run --debug
+Requirements: pip3 freeze; pip3 freeze > requirements.txt
+Requirements Install: pip install -r requirements.txt
+Flask Install: pip install Flask; set FLASK_APP=app.py; flask run
+
 GIT:
 git status (check status)
 git add <file name>
@@ -9,3 +16,5 @@ git push -u origin master (first time setup only)
 git push origin master (specify push to github)
 git push (use this)
 git clone https://paste-github-repository-address-here
+
+API access Key: ac6bfd91b445fdc159cc09b2e00d1f85
