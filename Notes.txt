@@ -1,8 +1,8 @@
 Ubuntu:
 Root User: sudo -s; apt-get update && apt-get upgrade
-Python Venv: python3 -m venv venv; source venv/bin/activate; deactivate; flask --app app run --debug
 Requirements: pip3 freeze; pip3 freeze > requirements.txt
 Requirements Install: pip install -r requirements.txt
+Python Venv: python3 -m venv venv; source venv/bin/activate; deactivate; flask --app app run --debug
 Flask Install: pip install Flask; set FLASK_APP=app.py; flask run
 
 GIT:
