@@ -22,11 +22,10 @@ app.config["SECRET_KEY"] = "I'LL NEVER TELL!!"
 debug = DebugToolbarExtension(app)
 
 
-@app.route("/")
-def root():
-    """Homepage: redirect to /playlists."""
-
-    return redirect("/playlists")
+@app.route("/", methods=["GET"])
+def index():
+    playlists = session.query(Playlist).all()
+    return render_template("base.html", title="Playlists", playlists=playlists)
 
 
 ##############################################################################
@@ -46,6 +45,16 @@ def show_playlist(playlist_id):
     """Show detail on specific playlist."""
 
     # ADD THE NECESSARY CODE HERE FOR THIS ROUTE TO WORK
+    playlistName = session.query(Playlist).filter_by(id=playlist_id).one()
+    songs = session.query(Song).filter_by(playlist_id=playlist_id)
+    playlists = session.query(Playlist).all()
+    return render_template(
+        "playlists.html",
+        title="Songs",
+        songs=songs,
+        playlistName=playlistName,
+        playlists=playlists,
+    )
 
 
 @app.route("/playlists/add", methods=["GET", "POST"])
