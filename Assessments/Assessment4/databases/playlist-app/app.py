@@ -43,16 +43,14 @@ def show_playlist(playlist_id):
     """Show detail on specific playlist."""
 
     # ADD THE NECESSARY CODE HERE FOR THIS ROUTE TO WORK
-    playlistName = session.query(Playlist).filter_by(id=playlist_id).one()
-    songs = session.query(Song).filter_by(playlist_id=playlist_id)
-    playlists = session.query(Playlist).all()
-    return render_template(
-        "playlists.html",
-        title="Songs",
-        songs=songs,
-        playlistName=playlistName,
-        playlists=playlists,
-    )
+    playlist = Playlist.query.get(playlist_id)
+
+    if not playlist:
+        return render_template(message="Playlist not found")
+
+    songs = playlist.songs.all()
+
+    return render_template("playlist.html", playlist=playlist, songs=songs)
 
 
 @app.route("/playlists/add", methods=["GET", "POST"])
@@ -64,6 +62,21 @@ def add_playlist():
     """
 
     # ADD THE NECESSARY CODE HERE FOR THIS ROUTE TO WORK
+    if request.method == "POST":
+        name = request.form.get("name")
+
+        if not name:
+            return render_template(
+                "new_playlist.html", error="Please enter a playlist name."
+            )
+
+        new_playlist = Playlist(name=name)
+        db.session.add(new_playlist)
+        db.session.commit()
+
+        return redirect(url_for("list_of_playlists"))
+
+    return render_template("add_playlist.html")
 
 
 ##############################################################################
@@ -94,6 +107,20 @@ def add_song():
     """
 
     # ADD THE NECESSARY CODE HERE FOR THIS ROUTE TO WORK
+    if request.method == "POST":
+        title = request.form.get("title")
+        artist = request.form.get("artist")
+
+        if not title or not artist:
+            return render_template("add_song.html", error="Please fill out all fields.")
+
+        new_song = Song(title=title, artist=artist)
+        db.session.add(new_song)
+        db.session.commit()
+
+        return redirect(url_for("list_of_songs"))
+
+    return render_template("add_song.html")
 
 
 @app.route("/playlists/<int:playlist_id>/add-song", methods=["GET", "POST"])
