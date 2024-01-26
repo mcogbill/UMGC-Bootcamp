@@ -30,8 +30,6 @@ def index():
 
 ##############################################################################
 # Playlist routes
-
-
 @app.route("/playlists")
 def show_all_playlists():
     """Return a list of playlists."""
