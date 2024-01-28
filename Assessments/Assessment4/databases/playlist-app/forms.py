@@ -9,6 +9,11 @@ class PlaylistForm(FlaskForm):
 
     # Add the necessary code to use this form
 
+    # db.session.add(new_playlist)
+    # db.session.commit()
+
+    # return render_template("playlists.html", message="Playlist added successfully")
+
 
 class SongForm(FlaskForm):
     """Form for adding songs."""
@@ -20,4 +25,4 @@ class SongForm(FlaskForm):
 class NewSongForPlaylistForm(FlaskForm):
     """Form for adding a song to playlist."""
 
-    song = SelectField('Song To Add', coerce=int)
+    song = SelectField("Song To Add", coerce=int)

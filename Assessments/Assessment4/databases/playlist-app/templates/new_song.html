@@ -4,4 +4,14 @@
 
 <h1>Add a form that when submitted creates a new song!</h1>
 
+<form action="forms.py" method="post">
+    <label for="title">Song Title:</label>
+    <input type="text" id="title" name="title" required>
+
+    <label for="artist">Artist:</label>
+    <input type="text" id="artist" name="artist" required>
+
+    <input type="submit" value="Add Song">
+</form>
+
 {% endblock %}
