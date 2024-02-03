@@ -61,6 +61,18 @@ def add_playlist():
     return render_template("new_playlist.html")
 
 
+@app.route("/playlists/submit_form", methods=["GET", "POST"])
+def add_playlist():
+    """Handle add-playlist form:
+
+    - if form not filled out or invalid: show form
+    - if valid: add playlist to SQLA and redirect to list-of-playlists
+    """
+
+    # ADD THE NECESSARY CODE HERE FOR THIS ROUTE TO WORK
+    return redirect("/playlists")
+
+
 ##############################################################################
 # Song routes
 
