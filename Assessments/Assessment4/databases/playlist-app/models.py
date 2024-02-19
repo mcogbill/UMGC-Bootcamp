@@ -36,10 +36,10 @@ class Song(db.Model):
 class PlaylistSong(db.Model):
     """Mapping of a playlist to a song."""
 
-    __tablename__ = "playlist_Songs"
+    __tablename__ = "playlist_songs"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    playlist_id = db.Column(db.Integer, db.ForeignKey("playlist.id"))
+    playlist_id = db.Column(db.Integer, db.ForeignKey("playlists.id"))
     song_id = db.Column(db.Integer, db.ForeignKey("songs.id"))
 
 
