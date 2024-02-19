@@ -8,31 +8,39 @@ db = SQLAlchemy()
 class Playlist(db.Model):
     """Playlist."""
 
-    __tablename__ = "Playlists"
+    __tablename__ = "playlists"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(50), nullable=False, unique=True)
-    description = db.Column(db.String(50), nullable=False, unique=True)
+    name = db.Column(db.String, nullable=False)
+    description = db.Column(db.Text)
+
+    def _repr_(self):
+        return f"<Playlist name={self.name} description={self.description} >"
 
 
 class Song(db.Model):
     """Song."""
 
-    __tablename__ = "Songs"
+    __tablename__ = "songs"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(50), nullable=False, unique=True)
-    artist = db.Column(db.String(50), nullable=False, unique=True)
+    title = db.Column(db.String, nullable=False)
+    artist = db.Column(db.String, nullable=False)
+
+    album = db.relationship("Playlist", secondary="playlist_songs", backref="songs")
+
+    def _repr_(self):
+        return f"<Song title={self.title} artist={self.artist} >"
 
 
 class PlaylistSong(db.Model):
     """Mapping of a playlist to a song."""
 
-    __tablename__ = "Playlist_Songs"
+    __tablename__ = "playlist_Songs"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    playlist_id = db.Column(db.Integer, nullable=False, default=20)
-    song_id = db.Column(db.Integer, nullable=False, default=20)
+    playlist_id = db.Column(db.Integer, db.ForeignKey("playlist.id"))
+    song_id = db.Column(db.Integer, db.ForeignKey("songs.id"))
 
 
 # DO NOT MODIFY THIS FUNCTION

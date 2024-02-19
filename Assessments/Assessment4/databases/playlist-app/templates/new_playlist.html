@@ -3,20 +3,21 @@
 {% block content %}
 
 <h1>Add a form that when submitted creates a new playlist!</h1>
-
-<form>
-    <label for="playlist_name">Playlist Name:</label>
-    <input type="text" id="playlist_name" name="playlist_name" required>
-    <br>
-
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" rows="4" required></textarea>
-
-    <input type="submit" value="Add Playlist">
+<form method='POST'>
+    {{ form.hidden_tag() }}
+    <div class="form-row">
+        {% for field in form if field.widget.input_type != "hidden" %}
+        <div class="form-group col-md-6 col-lg-4">
+            {{field.label (class_="h6")}}
+            {{field (class_="form-control")}}
+            {% for error in field.errors %}
+            <div class="form-text text-warning">{{error}}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-lg btn-outline-primary">Submit</button>
+    <a class="btn btn-lg btn-outline-warning" href="/playlists">Back</a>
 </form>
-
-<a class="btn btn-primary" href="/playlists/submit_form">
-    Add new Playlist
-</a>
 
 {% endblock %}

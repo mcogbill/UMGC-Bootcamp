@@ -4,14 +4,18 @@
 
 <h1>Add a form that when submitted creates a new song!</h1>
 
-<form action="forms.py" method="post">
-    <label for="title">Song Title:</label>
-    <input type="text" id="title" name="title" required>
-
-    <label for="artist">Artist:</label>
-    <input type="text" id="artist" name="artist" required>
-
-    <input type="submit" value="Add Song">
+<form method='POST'>
+    {{ form.hidden_tag() }}
+    <div class="form-row">
+        {% for field in form if field.widget.input_type != "hidden" %}
+        <div class="form-group col-md-6 col-lg-4">
+            {{field.label (class_="h6")}}
+            {{field (class_="form-control")}}
+        </div>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-lg btn-outline-primary">Submit</button>
+    <a class="btn btn-lg btn-outline-warning" href="/songs">Back</a>
 </form>
 
 {% endblock %}
