@@ -10,8 +10,6 @@ class PlaylistForm(FlaskForm):
 
     # Add the necessary code to use this form
 
-    # return render_template("playlists.html", message="Playlist added successfully")
-
     name = StringField("Name", validators=[InputRequired()])
     description = StringField("Description", validators=[InputRequired()])
 
