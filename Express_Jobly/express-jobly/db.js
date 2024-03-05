@@ -21,3 +21,4 @@ if (process.env.NODE_ENV === "production") {
 db.connect();
 
 module.exports = db;
+//Search config.js for db. databaseuri issue
