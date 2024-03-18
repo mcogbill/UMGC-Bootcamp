@@ -1,0 +1,31 @@
+{
+  "name": "express-jobly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.18.3",
+    "jest": "^25.3.0",
+    "jsonschema": "^1.2.6",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.3",
+    "pg": "^8.0.2",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/integration/config",
+      "<rootDir>/__tests__/unit/config"
+    ]
+  }
+}
