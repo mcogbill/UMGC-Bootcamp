@@ -1,24 +1,30 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const axios = require('axios');
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
+
+const base_url = 'https://api.github.com/users'
 
 app.post('/', async function (req, res, next) {
   try {
-    const results = await Promise.all(req.body.developers.map(async d => {
-      const response = await axios.get(`https://api.github.com/users/${d}`);
-      return response.data;
-    }));
-    const out = results.map(r => ({ name: r.name, bio: r.bio }));
-
-    return res.send(JSON.stringify(out));
+    let results = []
+    for (dev of req.body.developers) {
+      let resp = await axios.get(`${base_url}/${dev}`)
+      results.push({ "name": resp.data.name, "bio": resp.data.bio })
+    }
+    return res.send(results)
   } catch (err) {
     next(err);
   }
 });
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.use(function (err, req, res, next) {
+  let status = err.status || 500;
+  let message = err.message;
+  return res.status(status).json({
+    error: { message, status }
+  });
 });
+
+app.listen(3000);

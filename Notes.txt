@@ -43,9 +43,10 @@ Get All psql Commands: “\?”.
 Clear Screen: “\! cls”.
 Quit psql: “\q”.
 
-Node.js App:
-- node app.js
-- curl -X POST -H "Content-Type: application/json" -d '{"developers":["joelburton","elie"]}' http://localhost:3000
+Node/Express:
+npm install npm -global
+npm init
+npm install express
 
 
 API access Key: ac6bfd91b445fdc159cc09b2e00d1f85

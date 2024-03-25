@@ -1,57 +1,46 @@
+const { default: axios } = require('axios');
 const fs = require('fs');
-const http = require('http');
-const https = require('https');
-const { URL } = require('url');
+const { nextTick } = require('process');
+const process = require('process');
+const argv = process.argv
 
-// Function to perform a GET request and save HTML content to a file
-function saveHtml(url, filename) {
-    const protocol = url.startsWith('https') ? https : http;
-    protocol.get(url, (res) => {
-        let html = '';
-        res.on('data', (chunk) => {
-            html += chunk;
-        });
-        res.on('end', () => {
-            fs.writeFile(filename, html, (err) => {
-                if (err) {
-                    console.error(`Error writing to ${filename}: ${err.message}`);
-                } else {
-                    console.log(`Wrote to ${filename}`);
-                }
-            });
-        });
-    }).on('error', (err) => {
-        console.error(`Couldn't download ${url}: ${err.message}`);
-    });
-}
-
-// Function to extract hostname from URL
-function getHostname(url) {
-    return new URL(url).hostname;
-}
-
-// Main function
-function main() {
-    const filename = process.argv[2];
-    if (!filename) {
-        console.error('Please provide a filename.');
-        process.exit(1);
-    }
-
-    fs.readFile(filename, 'utf8', (err, data) => {
+function read(path) {
+    fs.readFile(path, 'utf8', function (err, data) {
         if (err) {
-            console.error(`Error reading file ${filename}: ${err.message}`);
+            console.error(`Can't read file, error: ${err}`);
             process.exit(1);
         }
-
-        const urls = data.split('\n').filter(url => url.trim() !== '');
-        urls.forEach(url => {
-            const hostname = getHostname(url);
-            const outputFilename = `${hostname}.html`;
-            saveHtml(url, outputFilename);
-        });
-    });
+        data = data.split("\n");
+        getURLData(data);
+    })
 }
 
-// Run the main function
-main();
+async function getURLData(data, next) {
+    for (url of data) {
+        if (url[0] === 'h') {
+            try {
+                let content = await axios.get(url);
+                write(url, content.data);
+            } catch (err) {
+                console.error(`Couldn't download ${url}`);
+            }
+        }
+    }
+}
+
+async function write(url, content, next) {
+    const file = url.split('/')
+    try {
+        await fs.writeFile(file[2], content, function (err) {
+            if (err) {
+                console.error(err);
+                process.exit(1);
+            }
+            console.log(`Wrote to ${file[2]}`)
+        })
+    } catch (err) {
+        console.error(`Couldn't write ${file[2]}`);
+    }
+}
+
+read(argv[2])
