@@ -17,7 +17,7 @@ const userUpdateSchema = require("../schemas/userUpdate.json")
  *
  */
 
-router.get('/', authUser, requireLogin, async function(req, res, next) {
+router.get('/', authUser, requireLogin, async function (req, res, next) {
   try {
     let users = await User.getAll();
     return res.json({ users });
@@ -37,7 +37,7 @@ router.get('/', authUser, requireLogin, async function(req, res, next) {
  *
  */
 
-router.get('/:username', authUser, requireLogin, async function(
+router.get('/:username', authUser, requireLogin, async function (
   req,
   res,
   next
@@ -66,8 +66,8 @@ router.get('/:username', authUser, requireLogin, async function(
  */
 
 
- // FIXES BUG #5 (removed incorrect middleware)
-router.patch('/:username', authUser, requireLogin, async function(
+// FIXES BUG #5 (removed incorrect middleware)
+router.patch('/:username', authUser, requireLogin, async function (
   req,
   res,
   next
@@ -105,7 +105,7 @@ router.patch('/:username', authUser, requireLogin, async function(
  * If user cannot be found, return a 404 err.
  */
 
-router.delete('/:username', authUser, requireAdmin, async function(
+router.delete('/:username', authUser, requireAdmin, async function (
   req,
   res,
   next

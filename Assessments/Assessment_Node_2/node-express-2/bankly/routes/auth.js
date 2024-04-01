@@ -18,7 +18,7 @@ const ExpressError = require('../helpers/expressError')
  *
  */
 
-router.post('/register', async function(req, res, next) {
+router.post('/register', async function (req, res, next) {
   try {
 
     // FIXES BUG #3
@@ -29,7 +29,7 @@ router.post('/register', async function(req, res, next) {
     }
 
     const { username, password, first_name, last_name, email, phone } = req.body;
-    let user = await User.register({username, password, first_name, last_name, email, phone});
+    let user = await User.register({ username, password, first_name, last_name, email, phone });
     const token = createTokenForUser(username, user.admin);
     return res.status(201).json({ token });
   } catch (err) {
@@ -47,7 +47,7 @@ router.post('/register', async function(req, res, next) {
  *
  */
 
-router.post('/login', async function(req, res, next) {
+router.post('/login', async function (req, res, next) {
   try {
     const { username, password } = req.body;
 

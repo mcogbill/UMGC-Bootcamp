@@ -51,7 +51,7 @@ function authUser(req, res, next) {
 
       // FIXES BUG #2
       let payload = jwt.verify(token, SECRET_KEY);
-      
+
       req.curr_username = payload.username;
       req.curr_admin = payload.admin;
     }

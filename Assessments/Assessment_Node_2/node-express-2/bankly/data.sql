@@ -1,4 +1,3 @@
-\c bankly
 
 CREATE TABLE users (
     username text PRIMARY KEY,
