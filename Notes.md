@@ -29,11 +29,15 @@
 - npm install axios
 - node 'file_name' (Example: app.js)
 - nodemon 'file_name' (Example: app.js)
+- npm install pg (Install psql)
 
 ## SQL
 
+Build Flow Charts: <https://app.diagrams.net/>
+
 - cmd status: sudo service postgresql (status, start, stop)
 - cmd init: psql OR psql (db_file_name)
+- createdb testdb
 - Connect to a Database: “psql -d db_name -U user_name”.
 - Check Postgres Version: “SELECT VERSION();”.
 - List All Databases: “\l”.

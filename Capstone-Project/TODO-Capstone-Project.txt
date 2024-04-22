@@ -1,0 +1,13 @@
+
+Before Launch
+-Dev Log: Post updates
+-Game Log: Add game log/history with psql. Data should be displayed when home screen "Game Log" tab is selected.
+-Online PvP: Use socket.io to add online option.
+-Debug: Find and Fix bugs and broken game mechanics.
+
+Optional
+-Rotation: Rotate sprites/objects with player/enemy controls.
+-Vulnerability: Rework hitBoxs. Collision attacks to vulerable areas (rear, and flanks) cause higher damage.
+-Fallen Troops: Show/spawn fallen troops based on damage taken. Use footsteps.html template.
+-Map: Paint detailed canvas background. Add ocean, tree, and wind effects.
+-Sound: Use API for sound effects.
