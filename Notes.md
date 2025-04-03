@@ -10,6 +10,7 @@
 
 ## Git
 
+- git init
 - git status (check status)
 - git add 'file_name'
 - git add . (add all untracked changes)

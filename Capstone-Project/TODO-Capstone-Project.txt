@@ -1,5 +1,10 @@
+NOTES:
+- Add labels for stats UI.
+- Hosting AWS or similar.
+- GCP for students. Get student credits. Link: https://cloud.google.com/products/compute?utm_source=google&utm_medium=cpc&utm_campaign=na-US-all-en-dr-bkws-all-all-trial-b-dr-1707554&utm_content=text-ad-none-any-DEV_c-CRE_665665924942-ADGP_Hybrid+%7C+BKWS+-+MIX+%7C+Txt-Compute-Compute+Engine-KWID_43700078963887895-kwd-11024252311&utm_term=KW_google+cloud+computing-ST_google+cloud+computing&gad_source=1&gclid=Cj0KCQjwlZixBhCoARIsAIC745CHMdpYvC0_7qpe22Ihuwfbv_1kQ7h-W8a_hsd-zq_pH4LRKkWpGYgaArQVEALw_wcB&gclsrc=aw.ds&hl=en
+- Link: https://cloud.google.com/free?hl=en
 
-Before Launch
+Launch Ready:
 -Dev Log: Post updates
 -Game Log: Add game log/history with psql. Data should be displayed when home screen "Game Log" tab is selected.
 -Online PvP: Use socket.io to add online option.
